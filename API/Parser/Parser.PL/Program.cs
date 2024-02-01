@@ -1,6 +1,20 @@
+using Parser.BLL.Infrastructure;
+using Parser.DAL.Interfaces.Uow;
+using Parser.DAL.Repositories.Uow;
+using Parser.PL.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+IConfiguration configuration = new ConfigurationBuilder()
+    .SetBasePath(builder.Environment.ContentRootPath)
+    .AddJsonFile("appsettings.json")
+    .Build();
+string connectionString = configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddSingleton<IUnitOfWork>(_ => new UnitOfWork(connectionString));
+builder.Services.AddSingleton(s => MapperConfig.Configure().CreateMapper());
+builder.Services.AddBllServiceCollection();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

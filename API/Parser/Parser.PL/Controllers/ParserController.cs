@@ -1,9 +1,13 @@
-﻿using AutoMapper;
+﻿using System;
+using System.IO;
+using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Parser.BLL.Dtos;
 using Parser.BLL.Services.Contracts;
 using Parser.PL.Models;
 using Parser.PL.Properties;
+using Parser.PL.Services.Contracts;
 using Serilog;
 
 namespace Parser.PL.Controllers
@@ -14,11 +18,13 @@ namespace Parser.PL.Controllers
     {
         private readonly IFileService _fileService;
         private readonly IMapper _mapper;
+        private readonly Func<string, IParser> _parserFactory;
 
-        public ParserController(IFileService fileService, IMapper mapper)
+        public ParserController(IFileService fileService, IMapper mapper, Func<string, IParser> parserFactory)
         {
             _fileService = fileService;
             _mapper = mapper;
+            _parserFactory = parserFactory;
         }
 
         [HttpPost]
@@ -26,6 +32,11 @@ namespace Parser.PL.Controllers
         {
             try
             {
+                IParser factory = _parserFactory(Path.GetExtension(fileVm.Name));
+                string contentText = factory.ReadContentFile(memStream);
+
+
+
                 var fileDto = _mapper.Map<FileVm, FileDto>(fileVm);
                 await _fileService.PostFile(fileDto);
 

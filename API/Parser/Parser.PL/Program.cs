@@ -1,3 +1,7 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Parser.BLL.Infrastructure;
 using Parser.DAL.Interfaces.Uow;
 using Parser.DAL.Repositories.Uow;
@@ -10,7 +14,7 @@ IConfiguration configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
     .Build();
 string connectionString = configuration.GetConnectionString("DefaultConnection");
-
+builder.Services.AddParsingServices();
 builder.Services.AddSingleton<IUnitOfWork>(_ => new UnitOfWork(connectionString));
 builder.Services.AddSingleton(s => MapperConfig.Configure().CreateMapper());
 builder.Services.AddBllServiceCollection();

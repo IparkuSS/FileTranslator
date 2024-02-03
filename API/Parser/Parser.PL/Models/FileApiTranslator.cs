@@ -1,8 +1,8 @@
-﻿using Translator.PL.Enums;
+﻿using Parser.PL.Enums;
 
-namespace Translator.PL.Models
+namespace Parser.PL.Models
 {
-    public class FileVm
+    public class FileApiTranslator
     {
         public string DataText { get; set; }
 

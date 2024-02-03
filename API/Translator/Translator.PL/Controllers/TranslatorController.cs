@@ -22,7 +22,11 @@ namespace Translator.PL.Controllers
                                                                       $"{fileVm.TranslateLanguage.GetDisplayName()}" +
                                                                       $"text - {fileVm.DataText}");
 
-
+                return Ok(new FileVm
+                {
+                    TranslateLanguage = fileVm.TranslateLanguage,
+                    DataText = result.ToString(),
+                });
 
             }
             catch (Exception ex)
@@ -31,9 +35,6 @@ namespace Translator.PL.Controllers
 
                 return BadRequest(ex.Message);
             }
-
-
-            return Ok();
         }
     }
 }

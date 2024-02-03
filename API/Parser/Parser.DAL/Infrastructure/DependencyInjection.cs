@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Parser.DAL.Context;
 using Parser.DAL.Interfaces.Uow;
 using Parser.DAL.Repositories.Uow;

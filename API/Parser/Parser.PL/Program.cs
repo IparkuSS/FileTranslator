@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Parser.BLL.Infrastructure;
 using Parser.PL.Infrastructure;
+using Parser.PL.Models.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,11 @@ string connectionString = configuration.GetConnectionString("DefaultConnection")
 builder.Services.AddDalServiceCollection(connectionString);
 builder.Services.AddBllServiceCollection();
 builder.Services.AddParsingServices();
+IConfigurationSection applicationSettingsConfiguration = configuration.GetSection(nameof(TranslatorSettings));
+_ = builder.Services.Configure<TranslatorSettings>(applicationSettingsConfiguration);
+
+_ = builder.Services.AddSingleton(configuration);
+
 
 builder.Services.AddSingleton(s => MapperConfig.Configure().CreateMapper());
 

@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace Parser.PL.Services.Contracts
+﻿namespace Parser.PL.Services.Contracts
 {
     public interface IParser
     {
@@ -8,5 +6,10 @@ namespace Parser.PL.Services.Contracts
         /// Метод для парсинга файлов.
         /// </summary>
         string ReadContentFile(byte[] dataBytes);
+
+        /// <summary>
+        /// Метод для записи файлов.
+        /// </summary>
+        byte[] ModifyAndCreateDocument(byte[] originalDataBytes, string modifiedText);
     }
 }

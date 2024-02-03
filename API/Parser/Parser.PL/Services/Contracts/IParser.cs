@@ -7,6 +7,6 @@ namespace Parser.PL.Services.Contracts
         /// <summary>
         /// Метод для парсинга файлов.
         /// </summary>
-        string ReadContentFile(MemoryStream memStream);
+        string ReadContentFile(byte[] dataBytes);
     }
 }

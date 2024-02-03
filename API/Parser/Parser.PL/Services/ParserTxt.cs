@@ -1,14 +1,12 @@
-﻿using Parser.PL.Services.Contracts;
-using System.IO;
-using Parser.PL.Helpers;
+﻿using Parser.PL.Helpers;
+using Parser.PL.Services.Contracts;
 
 namespace Parser.PL.Services
 {
     public class ParserTxt : IParser
     {
-        public string ReadContentFile(MemoryStream memStream)
+        public string ReadContentFile(byte[] dataBytes)
         {
-            byte[] dataBytes = memStream.ToArray();
             System.Text.Encoding encoding = EncodingHelper.GetEncoding(dataBytes);
             string text = encoding.GetString(dataBytes);
 

@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Parser.BLL.Dtos;
 using Parser.BLL.Services.Contracts;
@@ -9,10 +6,12 @@ using Parser.PL.Models;
 using Parser.PL.Properties;
 using Parser.PL.Services.Contracts;
 using Serilog;
+using System;
+using System.Threading.Tasks;
 
 namespace Parser.PL.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/parser")]
     [ApiController]
     public class ParserController : ControllerBase
     {
@@ -32,18 +31,24 @@ namespace Parser.PL.Controllers
         {
             try
             {
-                IParser factory = _parserFactory(Path.GetExtension(fileVm.Name));
-                string contentText = factory.ReadContentFile(memStream);
+                IParser factory = _parserFactory(fileVm.Extension);
+                string contentText = factory.ReadContentFile(fileVm.DataBytes);
+                var fileDto = _mapper.Map<FileVm, FileDto>(fileVm, opt =>
+                {
+                    opt.AfterMap((src, dest) =>
+                    {
+                        dest.DataText = contentText;
+                    });
+                });
 
-
-
-                var fileDto = _mapper.Map<FileVm, FileDto>(fileVm);
                 await _fileService.PostFile(fileDto);
 
             }
             catch (Exception ex)
             {
                 Log.Error(string.Format(Resources.ErrorInPostParserFormat, ex.Message));
+
+                return BadRequest(ex.Message);
             }
 
 

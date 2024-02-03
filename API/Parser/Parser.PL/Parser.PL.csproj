@@ -15,9 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Translator\Translator.BLL\Translator.BLL.csproj" />
     <ProjectReference Include="..\Parser.BLL\Parser.BLL.csproj" />
-    <ProjectReference Include="..\Parser.DAL\Parser.DAL.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -12,5 +12,12 @@ namespace Parser.BLL.Infrastructure
 
             return services;
         }
+
+        public static IServiceCollection AddDalServiceCollection(this IServiceCollection services, string connString)
+        {
+            _ = AddDalServiceCollection(services, connString);
+
+            return services;
+        }
     }
 }

@@ -1,16 +1,15 @@
 ﻿using Parser.PL.Services.Contracts;
 using Syncfusion.Pdf;
 using Syncfusion.Pdf.Parsing;
-using System.IO;
 using System.Text;
 
 namespace Parser.PL.Services
 {
     public class ParserPdf : IParser
     {
-        public string ReadContentFile(MemoryStream memStream)
+        public string ReadContentFile(byte[] dataBytes)
         {
-            using (PdfLoadedDocument loadedDocument = new PdfLoadedDocument(memStream))
+            using (PdfLoadedDocument loadedDocument = new PdfLoadedDocument(dataBytes))
             {
                 StringBuilder text = new StringBuilder();
 

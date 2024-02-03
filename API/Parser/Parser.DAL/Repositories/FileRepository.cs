@@ -1,17 +1,22 @@
-﻿using Parser.DAL.Interfaces;
+﻿using Parser.DAL.Context;
+using Parser.DAL.Interfaces;
 using Parser.DAL.Models;
-using System.Data;
 
 namespace Parser.DAL.Repositories
 {
     public class FileRepository : IFileRepository
     {
-        public FileRepository(IDbTransaction transaction) { }
+        private readonly ApplicationDbContext _dbContext;
 
-
-        public Task PostFile(FileDb fileDb)
+        public FileRepository(ApplicationDbContext dbContext)
         {
-            throw new NotImplementedException();
+            _dbContext = dbContext;
+        }
+
+        public async Task PostFile(FileDb fileDb)
+        {
+            await _dbContext.Files.AddAsync(fileDb);
+            // Дополнительные операции, если необходимо
         }
     }
 }
